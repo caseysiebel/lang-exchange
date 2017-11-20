@@ -28,8 +28,8 @@ describe('routes : users', () => {
                     res.body.status.should.eql('success');
                     res.body.data.length.should.eql(2);
                     res.body.data[0].should.include.keys('id', 'username', 'password');
+                    done();
                 });
-            done();
         });
     });
 
