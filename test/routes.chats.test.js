@@ -109,7 +109,7 @@ describe('routes : chats', () => {
 							res.body.status.should.eql('success');
 							res.body.data[0].should.include.keys('id', 'created_at');
 							const newChatObject = res.body.data[0];
-							//newChatObject.password.should.not.eql(chatObject.rating);
+                            newChatObject.created_at.should.not.eql(chatObject.created_at);
 							done();
 						});
 				});
