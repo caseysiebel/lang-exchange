@@ -67,7 +67,6 @@ router.post(BASE_URL, async (ctx) => {
 })
 
 router.put(`${BASE_URL}/:id`, async (ctx) => {
-    console.log('in put route');
     try {
         const chat = await queries.updateChat(ctx.params.id, ctx.request.body);
         if (chat.length) {
