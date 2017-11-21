@@ -130,4 +130,40 @@ describe('routes : chats', () => {
 				});
 		});
 	});
+	describe('DELETE /api/v1/chats/:id', () => {
+		it('should return the chat that was deleted', (done) => {
+			knex('chats')
+				.select('*')
+				.then((chats) => {
+					const chatObject = chats[0];
+					const lengthBeforeDelete = chats.length;
+					chai.request(server)
+						.delete(`/api/v1/chats/${chatObject.id}`)
+						.end((err, res) => {
+							should.not.exist(err);
+							res.status.should.equal(200);
+							res.type.should.equal('application/json');
+							res.body.status.should.eql('success');
+							res.body.data[0].should.include.keys('id', 'created_at');
+							knex('chats').select('*')
+								.then((updatedChats) => {
+									updatedChats.length.should.eql(lengthBeforeDelete - 1);
+									done();
+								});
+						});
+				});
+		});
+		it('should throw an error if the chat does not exist', (done) => {
+			chai.request(server)
+				.delete('/api/v1/chats/999999999')
+				.end((err, res) => {
+					should.exist(err);
+					res.status.should.equal(404);
+					res.type.should.equal('application/json');
+					res.body.status.should.eql('error');
+					res.body.message.should.eql('That chat does not exist.');
+					done();
+				});
+		});
+	});
 });

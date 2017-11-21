@@ -20,11 +20,17 @@ function updateChat(id, chat) {
 		.where({ id: parseInt(id) })
 		.returning('*');
 }
+function deleteChat(id) {
+    return knex('chats')
+        .del()
+        .where({ id: parseInt(id) })
+        .returning('*');
+}
 
 module.exports = {
     getAllChats,
     getSingleChat,
 	addChat,
 	updateChat,
-
+    deleteChat
 }
