@@ -66,4 +66,32 @@ router.post(BASE_URL, async (ctx) => {
 	}
 })
 
+router.put(`${BASE_URL}/:id`, async (ctx) => {
+    console.log('in put route');
+    try {
+        const chat = await queries.updateChat(ctx.params.id, ctx.request.body);
+        if (chat.length) {
+            ctx.status = 200;
+            ctx.body = {
+                status: 'success',
+                data: chat
+            }
+        }
+        else {
+            ctx.status = 404;
+            ctx.body = {
+                status: 'error',
+                message: 'That chat does not exist.'
+            }
+        }
+    }
+    catch (err) {
+        ctx.status = 400;
+        ctx.body = {
+            status: 'error',
+            message: err.message || 'Sorry, an error has occured.'
+        };
+    }
+})
+
 module.exports = router;

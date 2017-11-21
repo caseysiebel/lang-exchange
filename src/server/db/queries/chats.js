@@ -14,10 +14,17 @@ function addChat(chat) {
 		.insert(chat)
 		.returning('*');
 }
+function updateChat(id, chat) {
+    return knex('chats')
+		.update(chat)
+		.where({ id: parseInt(id) })
+		.returning('*');
+}
 
 module.exports = {
     getAllChats,
     getSingleChat,
 	addChat,
+	updateChat,
 
 }

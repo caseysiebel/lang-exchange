@@ -91,5 +91,43 @@ describe('routes : chats', () => {
 				});
 		});
 	});
-
+	describe('PUT /api/v1/chats', () => {
+		it('should return the chat that was updated', (done) => {
+			knex('chats')
+				.select('*')
+				.then((chat) => {
+					const chatObject = chat[0];
+					chai.request(server)
+						.put(`/api/v1/chats/${chatObject.id}`)
+						.send({
+							created_at: Date.now()
+						})
+						.end((err, res) => {
+							should.not.exist(err);
+							res.status.should.equal(200);
+							res.type.should.equal('application/json');
+							res.body.status.should.eql('success');
+							res.body.data[0].should.include.keys('id', 'created_at');
+							const newChatObject = res.body.data[0];
+							//newChatObject.password.should.not.eql(chatObject.rating);
+							done();
+						});
+				});
+		});
+		it('should throw an error if the chat does not exist', (done) => {
+			chai.request(server)
+				.put('/api/v1/chats/999999999')
+				.send({
+					created_at: Date.now()
+				})
+				.end((err, res) => {
+					should.exist(err);
+					res.status.should.equal(404);
+					res.type.should.equal('application/json');
+					res.body.status.should.eql('error');
+					res.body.message.should.eql('That chat does not exist.');
+					done();
+				});
+		});
+	});
 });
