@@ -17,6 +17,8 @@ describe('routes : users', () => {
 
     afterEach(() => knex.migrate.rollback());
 
+    after(() => server.close());
+
     describe('GET /api/v1/users', () => {
         it('should return all users', (done) => {
             chai.request(server)

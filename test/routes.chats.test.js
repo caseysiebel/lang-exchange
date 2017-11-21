@@ -16,6 +16,8 @@ describe('routes : chats', () => {
 
     afterEach(() => knex.migrate.rollback());
 
+    after(() => server.close());
+
     describe('GET /api/v1/chats', () => {
         it('should return all chats', (done) => {
             chai.request(server)
