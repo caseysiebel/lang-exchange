@@ -17,4 +17,26 @@ router.get(BASE_URL, async (ctx) => {
     }
 });
 
+router.get(`${BASE_URL}/:id`, async (ctx) => {
+    try {
+        const chat = await queries.getSingleChat(ctx.params.id);
+        if (chat.length) {
+            ctx.body = {
+                status: 'success',
+                data: chat
+            };
+        }
+        else {
+            ctx.status = 404;
+            ctx.body = {
+                status: 'error',
+                message: 'That chat does not exist.'
+            };
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+});
+
 module.exports = router;

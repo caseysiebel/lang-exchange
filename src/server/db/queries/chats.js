@@ -5,6 +5,14 @@ function getAllChats() {
         .select('*');
 }
 
+function getSingleChat(id) {
+    return knex('chats')
+        .select('*')
+        .where({ id: parseInt(id) });
+}
+
 module.exports = {
     getAllChats,
+    getSingleChat,
+
 }

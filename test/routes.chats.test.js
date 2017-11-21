@@ -33,4 +33,31 @@ describe('routes : chats', () => {
                 })
         });
     });
+
+    describe('GET /api/v1/chats/:id', () => {
+        it('should return a single message', (done) => {
+            chai.request(server)
+                .get('/api/v1/chats/1')
+                .end((err, res) => {
+                    should.not.exist(err);
+                    res.status.should.equal(200);
+                    res.type.should.equal('application/json');
+                    res.body.status.should.eql('success');
+                    res.body.data[0].should.include.keys('id', 'created_at');
+                    done();
+                });
+        });
+        it('should throw an error if the chat does not exist', (done) => {
+            chai.request(server)
+                .get('/api/v1/chats/999999999')
+                .end((err, res) => {
+                    should.exist(err);
+                    res.status.should.equal(404);
+                    res.type.should.equal('application/json');
+                    res.body.status.should.eql('error');
+                    res.body.message.should.eql('That chat does not exist.');
+                    done();
+                });
+        });
+    });
 });
