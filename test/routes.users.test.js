@@ -110,7 +110,7 @@ describe('routes : users', () => {
                             res.body.status.should.eql('success');
                             res.body.data[0].should.include.keys('id', 'username', 'password');
                             const newUserObject = res.body.data[0];
-                            newUserObject.password.should.not.eql(userObject.rating);
+                            newUserObject.password.should.not.eql(userObject.passwod);
                             done();
                         });
                 });
