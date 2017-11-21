@@ -68,7 +68,6 @@ describe('routes : chats', () => {
 					created_at: Date.now()
 				})
 				.end((err, res) => {
-					console.log('err', err);
 					should.not.exist(err);
 					res.status.should.equal(201);
 					res.type.should.equal('application/json');
