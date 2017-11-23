@@ -18,7 +18,7 @@ describe('routes : user_chat', () => {
 
 	after(() => server.close());
 
-    describe('POST /api/v1/chats/:id/user/:userId', () => {
+    describe('POST /api/v1/chats/:chat_id/user/:user_id', () => {
 		it('should return the user_chat that was added', (done) => {
 			chai.request(server)
                 .post('/api/v1/chats/1/user/2')
@@ -33,7 +33,7 @@ describe('routes : user_chat', () => {
 				});
 		});
 	});
-    describe('DELETE /api/v1/chats/:id/user/:userId', () => {
+    describe('DELETE /api/v1/chats/:chat_id/user/:user_id', () => {
 		it('should return the chat that was deleted', (done) => {
             userChats
 				.then((userChat) => {
