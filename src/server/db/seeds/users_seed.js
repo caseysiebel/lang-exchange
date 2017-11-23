@@ -7,6 +7,8 @@ exports.seed = (knex, Promise) => {
                 { username: 'leptone', password: '1245' },
                 { username: 'csiebel', password: '1245' },
                 { username: 'riley', password: '1245' },
+                { username: 'traci', password: '1245' },
+
             ]);
         });
 };

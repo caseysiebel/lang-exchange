@@ -1,12 +1,12 @@
 const db = require('../connection');
 const userChats = db('user_chat');
 
-module.exports = {
+const queries = {
 
     addUserChat: (user_id, chat_id) => userChats
                                         .insert({ user_id, chat_id })
                                         .returning('*'),
-    deleteUserChat: (user_id, chat_id) => userChats
+    deleteUserChat: (user_id, chat_id) =>  userChats
                                             .del()
                                             .where({ 
                                                 user_id: parseInt(user_id),
@@ -14,3 +14,5 @@ module.exports = {
                                             })
                                             .returning('*')
 };
+
+module.exports = queries;

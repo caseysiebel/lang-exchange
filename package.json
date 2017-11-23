@@ -7,7 +7,10 @@
     "test": "mocha",
     "test-w": "mocha --watch",
     "dev": "nodemon src/server/index.js",
-    "start": "node src/server/index.js"
+    "start": "node src/server/index.js",
+    "rollback": "knex migrate:rollback",
+    "migrate": "knex migrate:latest --env development",
+    "seed": "knex seed:run --env development"    
   },
   "author": "",
   "license": "ISC",
