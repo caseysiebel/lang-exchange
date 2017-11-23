@@ -123,14 +123,10 @@ router.delete(`${BASE_URL}/:id`, async (ctx) => {
 })
 
 router.post(`${BASE_URL}/:id/user/:user_id`, async (ctx) => {
-    console.log('in route');
     try {
-        console.log('in try');
-        console.log('userIntersectionQueries.addUserChat', userIntersectionQueries.addUserChat);
         const userChat = await userIntersectionQueries.addUserChat(ctx.params.user_id, ctx.params.id);
         console.log('userChat', userChat);
         if (userChat.length) {
-            console.log('in status 201')
             ctx.status = 201;
             ctx.body = {
                 status: 'success',

@@ -19,16 +19,16 @@ describe('routes : user_chat', () => {
 	after(() => server.close());
 
     describe('POST /api/v1/chats/:id/user/:userId', () => {
-		it('should return the chat that was added', (done) => {
+		it('should return the user_chat that was added', (done) => {
 			chai.request(server)
                 .post('/api/v1/chats/1/user/2')
 				.send({ })
 				.end((err, res) => {
-					should.not.exist(err);
+                    should.not.exist(err);
 					res.status.should.equal(201);
-					res.type.should.equal('application/json');
-					res.body.status.should.eql('success');
-					res.body.data[0].should.include.keys('id', 'created_at');
+                    res.type.should.equal('application/json');
+                    res.body.status.should.eql('success');
+                    res.body.data[0].should.include.keys('id', 'user_id', 'chat_id');
 					done();
 				});
 		});

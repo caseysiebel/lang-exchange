@@ -10,9 +10,6 @@ function getSingleUser(id) {
         .where({ id: parseInt(id) });
 }
 function addUser(user) {
-    console.log('=====================================================')
-    console.log(user)
-    console.log('=====================================================')
     return knex('users')
         .insert(user)
         .returning('*');
