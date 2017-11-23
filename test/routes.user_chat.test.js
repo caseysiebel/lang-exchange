@@ -5,16 +5,16 @@ const should = chai.should();
 const chaiHttp = require('chai-http');
 
 const server = require('../src/server/index');
-const knex = require('../src/server/db/connection');
+//const knex = require('../src/server/db/connection');
+const db = require('../src/server/db/connection');
+const userChats = db('user_chat');
 
 describe('routes : user_chat', () => {
-	beforeEach(() => {
-		return knex.migrate.rollback()
-			.then(() => knex.migrate.latest())
-			.then(() => knex.seed.run())
-	});
+	beforeEach(() => db.migrate.rollback()
+                    .then(() => db.migrate.latest())
+                    .then(() => db.seed.run()));
 
-	afterEach(() => knex.migrate.rollback());
+	afterEach(() => db.migrate.rollback());
 
 	after(() => server.close());
 
@@ -35,20 +35,23 @@ describe('routes : user_chat', () => {
 	});
     describe('DELETE /api/v1/chats/:id/user/:userId', () => {
 		it('should return the chat that was deleted', (done) => {
-			knex('user_chat')
-				.select('*')
+            userChats
 				.then((userChat) => {
 					const userChatObject = userChat[0];
 					const lengthBeforeDelete = userChat.length;
+                    const route = `/api/v1/chats/${userChatObject.chat_id}/user/${userChatObject.user_id}`;
+                    console.log('===========================================')
+                    console.log('route', route)
+                    console.log('===========================================')
 					chai.request(server)
-						.delete(`/api/v1/chats/${userChatObject.id}`)
+                        .delete(route)
 						.end((err, res) => {
 							should.not.exist(err);
 							res.status.should.equal(200);
-							res.type.should.equal('application/json');
+                            res.type.should.equal('application/json');
 							res.body.status.should.eql('success');
                             res.body.data[0].should.include.keys('id', 'user_id', 'chat_id');
-							knex('user_chat').select('*')
+                            userChats
 								.then((updatedUserChats) => {
 									updatedUserChats.length.should.eql(lengthBeforeDelete - 1);
 									done();

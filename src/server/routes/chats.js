@@ -122,10 +122,9 @@ router.delete(`${BASE_URL}/:id`, async (ctx) => {
     }
 })
 
-router.post(`${BASE_URL}/:id/user/:user_id`, async (ctx) => {
+router.post(`${BASE_URL}/:chat_id/user/:user_id`, async (ctx) => {
     try {
-        const userChat = await userIntersectionQueries.addUserChat(ctx.params.user_id, ctx.params.id);
-        console.log('userChat', userChat);
+        const userChat = await userIntersectionQueries.addUserChat(ctx.params.user_id, ctx.params.chat_id);
         if (userChat.length) {
             ctx.status = 201;
             ctx.body = {
@@ -150,5 +149,31 @@ router.post(`${BASE_URL}/:id/user/:user_id`, async (ctx) => {
     }
 
 });
+router.delete(`${BASE_URL}/:chat_id/user/:user_id`, async (ctx) => {
+    try {
+        const userChat = await userIntersectionQueries.deleteUserChat(ctx.params.user_id, ctx.params.chat_id);
+        if (userChat.length) {
+            ctx.status = 200;
+            ctx.body = {
+                status: 'success',
+                data: userChat
+            }
+        }
+        else {
+            ctx.status = 404;
+            ctx.body = {
+                status: 'error',
+                message: 'That userChat does not exist.'
+            }
+        }
+    }
+    catch (err) {
+        ctx.status = 400;
+        ctx.body = {
+            status: 'error',
+            message: err.message || 'Sorry, an error has occured.'
+        };
+    }
+})
 
 module.exports = router;
