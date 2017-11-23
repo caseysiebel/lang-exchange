@@ -65,7 +65,8 @@ describe('routes : chats', () => {
 			chai.request(server)
 				.post('/api/v1/chats')
 				.send({
-					created_at: Date.now()
+                    created_at: Date.now(),
+                    users: [ 2, 4 ]
 				})
 				.end((err, res) => {
 					should.not.exist(err);

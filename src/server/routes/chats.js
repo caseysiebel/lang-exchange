@@ -41,7 +41,8 @@ router.get(`${BASE_URL}/:id`, async (ctx) => {
 
 router.post(BASE_URL, async (ctx) => {
     try {
-        const chat = await queries.addChat(ctx.request.body);
+        const { created_at , users } = ctx.request.body;
+        const chat = await queries.addChat({ created_at });
         if (chat.length) {
             ctx.status = 201;
             ctx.body = {
