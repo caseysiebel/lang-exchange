@@ -40,9 +40,6 @@ describe('routes : user_chat', () => {
 					const userChatObject = userChat[0];
 					const lengthBeforeDelete = userChat.length;
                     const route = `/api/v1/chats/${userChatObject.chat_id}/user/${userChatObject.user_id}`;
-                    console.log('===========================================')
-                    console.log('route', route)
-                    console.log('===========================================')
 					chai.request(server)
                         .delete(route)
 						.end((err, res) => {
@@ -61,7 +58,7 @@ describe('routes : user_chat', () => {
 		});
 		it('should throw an error if the chat does not exist', (done) => {
 			chai.request(server)
-                .delete('/api/v1/chats/1/user999999999')
+                .delete('/api/v1/chats/1/user/999999999')
 				.end((err, res) => {
 					should.exist(err);
 					res.status.should.equal(404);

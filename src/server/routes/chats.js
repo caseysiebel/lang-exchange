@@ -163,7 +163,7 @@ router.delete(`${BASE_URL}/:chat_id/user/:user_id`, async (ctx) => {
             ctx.status = 404;
             ctx.body = {
                 status: 'error',
-                message: 'That userChat does not exist.'
+                message: 'That user_chat does not exist.'
             }
         }
     }
