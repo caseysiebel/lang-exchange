@@ -1,5 +1,6 @@
 const Router = require('koa-router');
 const queries = require('../db/queries/chats');
+const userIntersectionQueries = require('../db/queries/user_chat');
 
 const router = new Router();
 const BASE_URL = `/api/v1/chats`;
@@ -120,4 +121,38 @@ router.delete(`${BASE_URL}/:id`, async (ctx) => {
         };
     }
 })
+
+router.post(`${BASE_URL}/:id/user/:user_id`, async (ctx) => {
+    console.log('in route');
+    try {
+        console.log('in try');
+        console.log('userIntersectionQueries.addUserChat', userIntersectionQueries.addUserChat);
+        const userChat = await userIntersectionQueries.addUserChat(ctx.params.user_id, ctx.params.id);
+        console.log('userChat', userChat);
+        if (userChat.length) {
+            console.log('in status 201')
+            ctx.status = 201;
+            ctx.body = {
+                status: 'success',
+                data: userChat
+            };
+        }
+        else {
+            ctx.status = 400;
+            ctx.body = {
+                status: 'error',
+                message: 'Something went wrong.'
+            };
+        }
+    }
+    catch (err) {
+        ctx.status = 400;
+        ctx.body = {
+            status: 'error',
+            message: err.chat || 'Sorry, an error has occured.'
+        };
+    }
+
+});
+
 module.exports = router;
