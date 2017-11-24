@@ -95,10 +95,18 @@ describe('routes : chats', () => {
 					chat.should.include.keys('id', 'created_at');
                     let num_user_chats = 0;
                         
-                    const user_chat = knex('user_chat')
-                        .where('user_id', 2)
-                        .andWhere('chat_id', chat.id)
+                    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+                    console.log('chat', chat)
+                    console.log('chat.id', chat.id)
+                    console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+                    knex('user_chat')
                         .select('*')
+                        .then((data) => console.log('data', data))
+
+                    knex('user_chat')
+                        .where('user_id', 2)
+                        .select('*')
+                        .then((data) => console.log('data', data))
 
                     console.log('user_chat', user_chat);
 

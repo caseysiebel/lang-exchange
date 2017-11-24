@@ -3,6 +3,10 @@ const userChats = db('user_chat');
 
 const queries = {
     addUserChat: (user_id, chat_id) => {
+        console.log()
+        console.log('in query')
+        console.log('user_id', user_id)
+        console.log('chat_id', chat_id)
         const user_chat = userChats
             .insert({ user_id, chat_id })
             .returning('*')
