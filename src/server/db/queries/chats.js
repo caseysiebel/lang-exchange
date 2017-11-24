@@ -10,7 +10,6 @@ function getSingleChat(id) {
         .where({ id: parseInt(id) });
 }
 function addChat(chat) {
-    console.log('query', chat);
 	return knex('chats')
 		.insert(chat)
 		.returning('*');

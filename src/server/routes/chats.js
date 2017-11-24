@@ -1,6 +1,8 @@
 const Router = require('koa-router');
 const queries = require('../db/queries/chats');
 
+const user_chat_queries = require('../db/queries/user_chat');
+
 const router = new Router();
 const BASE_URL = `/api/v1/chats`;
 
@@ -41,14 +43,27 @@ router.get(`${BASE_URL}/:id`, async (ctx) => {
 
 router.post(BASE_URL, async (ctx) => {
     try {
-        const { created_at , users } = ctx.request.body;
-        const chat = await queries.addChat({ created_at });
-        if (chat.length) {
+        const { created_at , user_ids } = ctx.request.body;
+        const chat_list = await queries.addChat({ created_at });
+        const chat = chat_list[0];
+        if (chat) {
             ctx.status = 201;
             ctx.body = {
                 status: 'success',
                 data: chat
             };
+            try {
+                await Promise.all(user_ids.map((user_id) => {
+                    return user_chat_queries.addUserChat(user_id, chat.id)
+                }));
+            }
+            catch (err) {
+                ctx.status = 400;
+                ctx.body = {
+                    status: 'error',
+                    message: err.chat || 'Sorry, an error has occured.'
+                };
+            }
         }
         else {
             ctx.status = 400;

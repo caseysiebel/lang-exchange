@@ -7,6 +7,8 @@ const chaiHttp = require('chai-http');
 const server = require('../src/server/index');
 const knex = require('../src/server/db/connection');
 
+const user_chat_queries = require('../src/server/db/queries/user_chat');
+
 describe('routes : chats', () => {
 	beforeEach(() => {
 		return knex.migrate.rollback()
@@ -32,8 +34,7 @@ describe('routes : chats', () => {
 					done();
 				})
 		});
-	});
-
+	}); 
 	describe('GET /api/v1/chats/:id', () => {
 		it('should return a single message', (done) => {
 			chai.request(server)
@@ -66,17 +67,45 @@ describe('routes : chats', () => {
 				.post('/api/v1/chats')
 				.send({
                     created_at: Date.now(),
-                    users: [ 2, 4 ]
+                    user_ids: [ 2, 4 ]
 				})
 				.end((err, res) => {
 					should.not.exist(err);
 					res.status.should.equal(201);
 					res.type.should.equal('application/json');
 					res.body.status.should.eql('success');
-					res.body.data[0].should.include.keys('id', 'created_at');
+                    const chat = res.body.data;
+					chat.should.include.keys('id', 'created_at');
 					done();
 				});
 		});
+		it('should add 2 user_chats', (done) => {
+			chai.request(server)
+				.post('/api/v1/chats')
+				.send({
+                    created_at: Date.now(),
+                    user_ids: [ 2, 4 ]
+				})
+				.end((err, res) => {
+					should.not.exist(err);
+					res.status.should.equal(201);
+					res.type.should.equal('application/json');
+					res.body.status.should.eql('success');
+                    const chat = res.body.data;
+					chat.should.include.keys('id', 'created_at');
+                    let num_user_chats = 0;
+                        
+                    const user_chat = knex('user_chat')
+                        .where('user_id', 2)
+                        .andWhere('chat_id', chat.id)
+                        .select('*')
+
+                    console.log('user_chat', user_chat);
+
+
+                    done();
+                });
+        });
 		it('should throw an error if the payload if malformed', (done) => {
 			chai.request(server)
 				.post('/api/v1/users')
