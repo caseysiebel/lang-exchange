@@ -16,7 +16,7 @@ const queries = {
         const data = await db('user_chat').select('*')
         //console.log()
         console.log('data', data)
-        console.log('====================================================================================================')
+        console.log('****************************************************************************************************')
         console.log()
 
         //console.log('user_chat', user_chat)
