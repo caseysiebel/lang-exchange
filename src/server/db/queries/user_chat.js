@@ -2,18 +2,26 @@ const db = require('../connection');
 const userChats = db('user_chat');
 
 const queries = {
-    addUserChat: (user_id, chat_id) => {
+    addUserChat: ( async (user_id, chat_id) => {
         console.log()
+        console.log('====================================================================================================')
         console.log('in query')
         console.log('user_id', user_id)
         console.log('chat_id', chat_id)
-        const user_chat = userChats
+        //console.log()
+        const user_chat = await userChats
             .insert({ user_id, chat_id })
             .returning('*')
+        console.log('user_chat', user_chat);
+        const data = await db('user_chat').select('*')
+        //console.log()
+        console.log('data', data)
+        console.log('====================================================================================================')
+        console.log()
 
         //console.log('user_chat', user_chat)
         return user_chat;
-    },
+    }),
     deleteUserChat: (user_id, chat_id) => {
         return userChats
             .del()
