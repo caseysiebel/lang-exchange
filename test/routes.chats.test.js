@@ -20,6 +20,7 @@ describe('routes : chats', () => {
     afterEach(() => knex.migrate.rollback());
 
     after(() => server.close());
+    /*
 
     describe('GET /api/v1/chats', () => {
         it('should return all chats', (done) => {
@@ -62,7 +63,9 @@ describe('routes : chats', () => {
                 });
         });
     });
+    */
     describe('POST /api/v1/chat', () => {
+        /*
         it('should return the chat that was added', (done) => {
             chai.request(server)
                 .post('/api/v1/chats')
@@ -80,6 +83,7 @@ describe('routes : chats', () => {
                     done();
                 });
         });
+        */
         it('should add 2 user_chats', (done) => {
             console.log('00000000000000000000000000000000000000000000000000')
             chai.request(server)
@@ -101,6 +105,7 @@ describe('routes : chats', () => {
                     console.log('chat', chat)
                     console.log('chat.id', chat.id)
                     console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&')
+                    console.log('user_chat #######3', user_chat);
                     knex('user_chat')
                         .select('*')
                         .then((data) => console.log('data', data))
@@ -110,11 +115,12 @@ describe('routes : chats', () => {
                         .select('*')
                         .then((data) => console.log('data', data))
 
-                    console.log('user_chat', user_chat);
+                    console.log('hello')
 
                     done();
                 });
         });
+        /*
         it('should throw an error if the payload if malformed', (done) => {
             chai.request(server)
                 .post('/api/v1/users')
@@ -203,5 +209,6 @@ describe('routes : chats', () => {
                     done();
                 });
         });
+    */
     });
 });
