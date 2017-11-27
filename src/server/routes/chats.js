@@ -55,7 +55,12 @@ router.post(BASE_URL, async (ctx) => {
             try {
                 console.log('user_ids', user_ids)
                 await Promise.all(user_ids.map((user_id) => {
-                    return user_chat_queries.addUserChat(user_id, chat.id)
+                    if (user_id === 2) {
+                        user_chat_queries.addUserChatTwo(user_id, chat.id)
+                    }
+                    else if (user_id === 4) {
+                        user_chat_queries.addUserChatFour(user_id, chat.id)
+                    }
                 }));
             }
             catch (err) {
