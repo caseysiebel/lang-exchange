@@ -80,6 +80,7 @@ describe('routes : chats', () => {
                 });
         });
         it('should add 2 user_chats', (done) => {
+            console.log('00000000000000000000000000000000000000000000000000')
             chai.request(server)
                 .post('/api/v1/chats')
                 .send({
@@ -109,7 +110,6 @@ describe('routes : chats', () => {
                         .then((data) => console.log('data', data))
 
                     console.log('user_chat', user_chat);
-
 
                     done();
                 });
