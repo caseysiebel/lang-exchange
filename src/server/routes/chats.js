@@ -53,7 +53,6 @@ router.post(BASE_URL, async (ctx) => {
                 data: chat
             };
             try {
-                console.log('user_ids', user_ids)
                 await Promise.all(user_ids.map((user_id) => {
                     return user_chat_queries.addUserChat(user_id, chat.id)
                 }));

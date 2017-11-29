@@ -1,8 +1,9 @@
 const db = require('../connection');
+const temp = db('user_chat');
 
 const queries = {
     addUserChat: ( async (user_id, chat_id) => {
-        const user_chat = await db('user_chat')
+        const user_chat = await temp
             .insert({ user_id, chat_id })
             .returning('*');
         return user_chat;
