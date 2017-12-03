@@ -10,7 +10,7 @@
     "start": "node src/server/index.js",
     "rollback": "knex migrate:rollback",
     "migrate": "knex migrate:latest --env development",
-    "seed": "knex seed:run --env development"    
+    "seed": "knex seed:run --env development"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.2.1",
+    "koa-static": "^4.0.2",
     "pg": "^7.4.0"
   }
 }

@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const static = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 
 const indexRoutes = require('./routes/index');
@@ -16,6 +17,8 @@ app.use(usersRoutes.routes());
 app.use(chatsRoutes.routes());
 app.use(userChatRoutes.routes());
 app.use(messagesRoutes.routes());
+
+app.use(static('client/public'));
 
 const server = app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`);
